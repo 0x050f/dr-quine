@@ -37,9 +37,6 @@ _start:
 
 		pop rcx
 
-		cmp rax, 0x0
-		jl .next_loop
-
 		mov r12, rax
 		mov rdi, rax
 		lea rsi, [rel code]
@@ -51,6 +48,9 @@ _start:
 		push rax
 		xor rax, rax
 		call dprintf
+
+		cmp rax, 0x0
+		jl .next_loop
 
 		push r12
 		pop rdi
@@ -66,14 +66,11 @@ _start:
 	.end_loop:
 	add rsp, 256
 	pop rbp
-	xor rdi, rdi
-	jmp exit
-	.error:
-		mov rdi, 1
 
 exit:
+	xor rdi, rdi
 	mov rax, 60
 	syscall
 
 filename db FILENAME, 0x0
-code db `section.text:%1$c	global _start%1$c	extern sprintf%1$c	extern dprintf%1$c%1$c%3$cdefine		FILENAME		%4$cSully_%3$cd.s%4$c%1$c%1$c_start:%1$c	mov rbp, rsp%1$c	push rbp%1$c	mov rsp, rbp%1$c	sub rsp, 256%1$c	mov rcx, %2$d%1$c	cmp rcx, 0x0%1$c	jle .end_loop%1$c	.loop:%1$c		cmp rcx, 0x0%1$c		jl .end_loop%1$c%1$c		mov rdi, rsp%1$c		lea rsi, [rel filename]%1$c		mov rdx, rcx%1$c		mov r12, rcx%1$c		call sprintf%1$c%1$c		mov rdi, rsp%1$c		push r12%1$c		mov rsi, 420%1$c		mov rax, 90%1$c		syscall%1$c%1$c		push rsi%1$c		pop rdx%1$c		mov rsi, 577%1$c		mov rax, 2%1$c		syscall%1$c%1$c		pop rcx%1$c%1$c		cmp rax, 0x0%1$c		jl .next_loop%1$c%1$c		mov r12, rax%1$c		mov rdi, rax%1$c		lea rsi, [rel code]%1$c		mov rdx, 10%1$c		mov r13, rcx%1$c		mov r8, 37%1$c		mov r9, 96%1$c		lea rax, [rel code]%1$c		push rax%1$c		xor rax, rax%1$c		call dprintf%1$c%1$c		push r12%1$c		pop rdi%1$c		mov rax, 3%1$c		syscall%1$c%1$c		push r13%1$c		pop rcx%1$c%1$c		.next_loop:%1$c		dec rcx%1$c		jmp .loop%1$c	.end_loop:%1$c	add rsp, 256%1$c	pop rbp%1$c	xor rdi, rdi%1$c	jmp exit%1$c	.error:%1$c		mov rdi, 1%1$c%1$cexit:%1$c	mov rax, 60%1$c	syscall%1$c%1$cfilename db FILENAME, 0x0%1$ccode db %4$c%5$s%4$c, 0x0%1$c`, 0x0
+code db `section.text:%1$c	global _start%1$c	extern sprintf%1$c	extern dprintf%1$c%1$c%3$cdefine		FILENAME		%4$cSully_%3$cd.s%4$c%1$c%1$c_start:%1$c	mov rbp, rsp%1$c	push rbp%1$c	mov rsp, rbp%1$c	sub rsp, 256%1$c	mov rcx, %2$d%1$c	cmp rcx, 0x0%1$c	jle .end_loop%1$c	.loop:%1$c		cmp rcx, 0x0%1$c		jl .end_loop%1$c%1$c		mov rdi, rsp%1$c		lea rsi, [rel filename]%1$c		mov rdx, rcx%1$c		mov r12, rcx%1$c		call sprintf%1$c%1$c		mov rdi, rsp%1$c		push r12%1$c		mov rsi, 420%1$c		mov rax, 90%1$c		syscall%1$c%1$c		push rsi%1$c		pop rdx%1$c		mov rsi, 577%1$c		mov rax, 2%1$c		syscall%1$c%1$c		pop rcx%1$c%1$c		mov r12, rax%1$c		mov rdi, rax%1$c		lea rsi, [rel code]%1$c		mov rdx, 10%1$c		mov r13, rcx%1$c		mov r8, 37%1$c		mov r9, 96%1$c		lea rax, [rel code]%1$c		push rax%1$c		xor rax, rax%1$c		call dprintf%1$c%1$c		cmp rax, 0x0%1$c		jl .next_loop%1$c%1$c		push r12%1$c		pop rdi%1$c		mov rax, 3%1$c		syscall%1$c%1$c		push r13%1$c		pop rcx%1$c%1$c		.next_loop:%1$c		dec rcx%1$c		jmp .loop%1$c	.end_loop:%1$c	add rsp, 256%1$c	pop rbp%1$c%1$cexit:%1$c	xor rdi, rdi%1$c	mov rax, 60%1$c	syscall%1$c%1$cfilename db FILENAME, 0x0%1$ccode db %4$c%5$s%4$c, 0x0%1$c`, 0x0
